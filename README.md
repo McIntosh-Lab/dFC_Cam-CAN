@@ -29,11 +29,13 @@ Instructions here: https://github.com/McIntosh-Lab/PLS
 
 ## Usage
 LEiDA results used in paper are in `matlab_toolboxes/leida-matlab-1.0/res_Cam-CAN_TVB_SchaeferTian_218`
+
 PLS in `outputs/leida-matlab/PLS`, `PLS_group_analyses`, and `outputs/nctpy/5/PLS`
+
 NCT outputs in `outputs/nctpy`
 
 For code review:
-Get data from ~/projects/def-rmcintos/jneudorf/Cam-CAN/code_review (behavioural data, SC matrices and rsfMRI timecourses)
+Get data from `~/projects/def-rmcintos/jneudorf/Cam-CAN/code_review` (behavioural data, SC matrices and rsfMRI timecourses)
 Extract data/ folder from dFC_data.tar.gz into main folder.
 To reproduce:
 1. Figure 4 PLS behavioural correlation (A) and BSR transition probability matrix (B)

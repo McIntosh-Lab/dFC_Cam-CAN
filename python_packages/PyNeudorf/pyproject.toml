@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0","numpy","scipy"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PyNeudorf"
+version = "0.0.2"
+authors = [
+  { name="Josh Neudorf", email="jneudorf@sfu.ca" },
+]
+description = "Set of personal tools, especially for graphs and matrices"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/neudorf/PyNeudorf"
+"Bug Tracker" = "https://github.com/neudorf/PyNeudorf/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"PyNeudorf.data" = ["*"]

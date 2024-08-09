@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0","numpy","scipy","pillow","nilearn","nibabel","matplotlib"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brainvistools"
+version = "0.0.1"
+authors = [
+  { name="Josh Neudorf", email="jneudorf@sfu.ca" },
+]
+description = "Cortical and subcortical visualization tools"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/McIntosh-Lab/brainvistools"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"brainvistools.data" = ["*"]

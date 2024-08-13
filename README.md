@@ -30,7 +30,8 @@ module load python/3.10
 python3.10 -m venv neudorf_dFC
 source neudorf_dFC/bin/activate
 pip install numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
-pip install nctpycd python_packages/brainvistools
+pip install nctpy
+cd python_packages/brainvistools
 python -m pip install .
 cd ../PLS_wrapper
 python -m pip install .

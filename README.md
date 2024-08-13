@@ -4,10 +4,13 @@ This repository contains the code used for analyses in:
 
 Neudorf, J., Shen, K., & McIntosh, A. R. (2024). Dynamic network features of functional and structural brain networks support visual working memory in aging adults. bioRxiv. https://doi.org/10.1101/2024.07.30.605891
 
-## Environment installation instructions (bash):
+## Environment installation instructions:
 ### Python:
+#### Local Bash
 
 ```bash
+git clone https://github.com/McIntosh-Lab/dFC_Cam-CAN.git
+cd dFC_Cam-CAN
 conda create -n neudorf_dFC -c conda-forge python=3.10 numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
 conda activate neudorf_dFC
 pip install nctpy
@@ -18,6 +21,23 @@ python -m pip install .
 cd ../PyNeudorf
 python -m pip install .
 ```
+
+#### HPC (Alliance Canada) Bash
+```bash
+git clone https://github.com/McIntosh-Lab/dFC_Cam-CAN.git
+cd dFC_Cam-CAN
+module load python/3.10
+python3.10 -m venv neudorf_dFC
+source neudorf_dFC/bin/activate
+pip install numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
+pip install nctpycd python_packages/brainvistools
+python -m pip install .
+cd ../PLS_wrapper
+python -m pip install .
+cd ../PyNeudorf
+python -m pip install . 
+```
+
 
 
 ### Matlab:

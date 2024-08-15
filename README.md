@@ -33,7 +33,10 @@ python3.10 -m venv neudorf_dFC
 source neudorf_dFC/bin/activate
 pip install numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
 pip install nctpy
-python -m pip install matlabengine
+#edit line below by finding matlabroot using `which matlab`, and substitute `matlab` executable with `glnxa64`
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/restricted.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/matlab/2023b.2/bin/glnxa64
+#set matlabengine version number to match matlab version
+python -m pip install matlabengine==23.2.2
 cd python_packages/brainvistools
 python -m pip install .
 cd ../PLS_wrapper

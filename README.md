@@ -14,6 +14,7 @@ cd dFC_Cam-CAN
 conda create -n neudorf_dFC -c conda-forge python=3.10 numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
 conda activate neudorf_dFC
 pip install nctpy
+python -m pip install matlabengine
 cd python_packages/brainvistools
 python -m pip install .
 cd ../PLS_wrapper
@@ -31,6 +32,7 @@ python3.10 -m venv neudorf_dFC
 source neudorf_dFC/bin/activate
 pip install numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
 pip install nctpy
+python -m pip install matlabengine
 cd python_packages/brainvistools
 python -m pip install .
 cd ../PLS_wrapper

@@ -28,6 +28,7 @@ python -m pip install .
 git clone https://github.com/McIntosh-Lab/dFC_Cam-CAN.git
 cd dFC_Cam-CAN
 module load python/3.10
+module load matlab
 python3.10 -m venv neudorf_dFC
 source neudorf_dFC/bin/activate
 pip install numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine

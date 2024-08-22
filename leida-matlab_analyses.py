@@ -15,7 +15,7 @@ from PyNeudorf.pls import *
 from brainvistools import visualization
 import math
 
-BEHAVIOURAL_DATA_DIR = Path('../../../data/Cam-CAN/data_processing/behavioural_data')
+BEHAVIOURAL_DATA_DIR = Path('data/behav')
 BEHAVIOURAL_DATA_FILE = BEHAVIOURAL_DATA_DIR.joinpath('behavioural_data.csv')
 LEIDA_RESULTS_DIR = Path('matlab_toolboxes/leida-matlab-1.0/res_Cam-CAN_TVB_SchaeferTian_218')
 LEIDA_CLUSTERS_FILE = LEIDA_RESULTS_DIR.joinpath('LEiDA_Clusters.mat')

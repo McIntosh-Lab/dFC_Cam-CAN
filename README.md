@@ -7,7 +7,6 @@ Neudorf, J., Shen, K., & McIntosh, A. R. (2024). Dynamic network features of fun
 ## Environment installation instructions:
 ### Python:
 #### Local Bash
-
 ```bash
 git clone https://github.com/McIntosh-Lab/dFC_Cam-CAN.git
 cd dFC_Cam-CAN
@@ -45,7 +44,17 @@ cd ../PyNeudorf
 python -m pip install . 
 ```
 
+### R:
+#### Local Bash
+```bash
+Rscript install_packages.r
+```
 
+#### HPC (Alliance Canada) Bash
+```bash
+module load r/4.4.0
+Rscript install_packages.r
+```
 
 ### Matlab:
 #### LEiDA
@@ -72,6 +81,7 @@ PLS outputs saved in `outputs/leida-matlab/PLS` and `outputs/nctpy/5/PLS`
 
 Order to run code:
 
+1. `install_packages.r`
 1. `consistency_thresholding.py`
 2. `import_Cam-CAN_data.py`
 3. `prep_data.py`

@@ -16,12 +16,12 @@ from PyNeudorf.pls import *
 from PyNeudorf import visualization
 
 ATLAS = '220'
-BEHAVIOURAL_DATA_DIR = Path('../../../data/Cam-CAN/data_processing/behavioural_data') #update
+BEHAVIOURAL_DATA_DIR = Path('data/behav/')
 BEHAVIOURAL_DATA_FILE = BEHAVIOURAL_DATA_DIR.joinpath('behavioural_data.csv')
-SC_DATA_DIR = Path('../../../data/Cam-CAN/data_processing/SC_matrices_consistency_thresholded_0.5') #update
+SC_DATA_DIR = Path('data/SC/SC_matrices_consistency_thresholded_0.5')
 SC_DICT_FILE = SC_DATA_DIR.joinpath(f'TVBSchaeferTian{ATLAS}','SC_dict.pkl')
 SC_DIST_FILE = SC_DATA_DIR.joinpath(f'TVBSchaeferTian{ATLAS}','SC_dist_dict.pkl')
-RSFMRI_DATA_DIR = Path('/media/WDBlue/mcintosh/data/Cam-CAN/FC_matrices_good')
+RSFMRI_DATA_DIR = Path('data/rsfMRI/')
 RSFMRI_DICT_FILE = RSFMRI_DATA_DIR.joinpath(f'TVBSchaeferTian{ATLAS}','fmri_timeseries_dict.pkl')
 OUTPUT_DIR = Path('outputs')
 LEIDA_K = 5
@@ -309,7 +309,7 @@ from scipy.stats import pearsonr
 behaviour_ages_filter = behaviour_ages['subject'].isin(subjects)
 behaviour_ages_filtered = behaviour_ages.loc[behaviour_ages_filter]
 age_cog_plot = sns.regplot(data=behaviour_ages_filtered,x='age',y='Prcsn_PerceptionTest',ci=None, color=(.224,.604,.694))
-age_cog_plot.figure.savefig('figures/age_by_VSTM_SC.png',dpi=600)
+age_cog_plot.figure.savefig('outputs/age_by_VSTM_SC.png',dpi=600)
 print(pearsonr(behaviour_ages_filtered['age'],behaviour_ages_filtered['Prcsn_PerceptionTest']))
 
 #%% Age and VWM Median Split analysis

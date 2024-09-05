@@ -13,7 +13,7 @@ cd dFC_Cam-CAN
 conda create -n neudorf_dFC -c conda-forge python=3.10 numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
 conda activate neudorf_dFC
 pip install nctpy
-python -m pip install matlabengine
+python -m pip install matlabengine=9.13.11 #matlab 2022b.2
 cd python_packages/brainvistools
 python -m pip install .
 cd ../PLS_wrapper
@@ -26,16 +26,15 @@ python -m pip install .
 ```bash
 git clone https://github.com/McIntosh-Lab/dFC_Cam-CAN.git
 cd dFC_Cam-CAN
-module load python/3.10
-module load matlab
+module load StdEnv/2020 matlab/2022b.2 python/3.10
 python3.10 -m venv neudorf_dFC
 source neudorf_dFC/bin/activate
-pip install numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
+pip install numpy scipy nibabel nilearn matplotlib==3.6.2 pillow pandas seaborn==0.12.1 tqdm statsmodels plotnine==0.12.3 certifi
 pip install nctpy
 #edit line below by finding matlabroot using `which matlab`, and substitute `matlab` executable with `glnxa64`
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/restricted.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/matlab/2023b.2/bin/glnxa64
-#set matlabengine version number to match matlab version
-python -m pip install matlabengine==23.2.2
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/restricted.computecanada.ca/easybuild/software/2020/x86-64-v3/Core/matlab/2022b.2/bin/glnxa64
+#set matlabengine version number to match matlab version 2022b.2
+python -m pip install matlabengine==9.13.11
 cd python_packages/brainvistools
 python -m pip install .
 cd ../PLS_wrapper
@@ -52,16 +51,23 @@ Rscript install_packages.r
 
 #### HPC (Alliance Canada) Bash
 ```bash
-module load r/4.4.0
+module load StdEnv/2020 r/4.3.1 gcc/9.3.0 gdal/3.5.1 udunits/2.2.28
+mkdir -p ~/.local/R/$EBVERSIONR
+export R_LIBS=~/.local/R/$EBVERSIONR/
 Rscript install_packages.r
 ```
 
 ### Matlab:
-#### LEiDA
-Instructions here: https://github.com/PSYMARKER/leida-matlab
+#### Local Bash
+Follow instructions here and add `plscmd` folder to startup.m: https://github.com/McIntosh-Lab/PLS
 
-#### PLS
-Instructions here: https://github.com/McIntosh-Lab/PLS
+#### HPC (Alliance Canada) Bash
+```bash
+git clone https://github.com/McIntosh-Lab/PLS
+cp -r PLS/plscmd ~/matlab
+echo addpath(genpath('~/matlab/plscmd')) >> ~/matlab/startup.m
+echo "addpath(genpath('${PWD}/python_packages/PLS_wrapper'))" >> ~/matlab/startup.m
+```
 
 ## Usage
 LEiDA results used in paper are in `matlab_toolboxes/leida-matlab-1.0/res_Cam-CAN_TVB_SchaeferTian_218`
@@ -81,7 +87,6 @@ PLS outputs saved in `outputs/leida-matlab/PLS` and `outputs/nctpy/5/PLS`
 
 Order to run code:
 
-1. `install_packages.r`
 1. `consistency_thresholding.py`
 2. `import_Cam-CAN_data.py`
 3. `prep_data.py`
@@ -89,3 +94,10 @@ Order to run code:
 5. `leida-matlab_analyses.py` will perform PLS analyses on the LEiDA outputs and produce images used in figures 2, 3, and 4.
 6. `nctpy_analyses.py` will perform the network control theory simulation and the PLS analysis of the state 5 to 3 transition (figure 5).
 7. `PLS_group_analyses/PLS_group_analyses.m` performs secondary mean-centred PLS analyses for LEiDA and NCT analyses.
+
+For HPC (Alliance Canada), use sbatch submission scripts provided:
+ - `1_2_3_submit_preprocessing.sh`
+ - `matlab_toolboxes/leida-matlab-1.0/4_submit_leida.sh`
+ - `5_submit_leida_analyses.sh`
+ - `6_submit_nctpy_analyses.sh`
+ - `PLS_group_analyses/7_submit_group_analysis.sh`

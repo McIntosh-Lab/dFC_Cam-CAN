@@ -14,6 +14,7 @@ from PyNeudorf import graphs
 from PyNeudorf.pls import *
 from brainvistools import visualization
 import math
+print('done imports')
 
 BEHAVIOURAL_DATA_DIR = Path('data/behav')
 BEHAVIOURAL_DATA_FILE = BEHAVIOURAL_DATA_DIR.joinpath('behavioural_data.csv')
@@ -54,8 +55,10 @@ clusters_mat = sio.loadmat(LEIDA_CLUSTERS_FILE, simplify_cells=True)
 for k in K_list:
     LEiDA_centroids_dir = LEIDA_OUTPUTS_DIR.joinpath(f'K{k}')
     LEiDA_centroids_dir.mkdir(exist_ok=True)
-    k_idx = k - K_min
+    k_idx = k - 1 #index 1 in .mat starts at state 2
     cluster_centroid_roi_values = clusters_mat['Kmeans_results'][k_idx]['C']
+    print('k',k)
+    print("cluster_centroid_roi_values.shape",cluster_centroid_roi_values.shape)
     cluster_centroid_roi_values[0] *= -1
     cluster_centroid_roi_values_pos_bin = np.where(cluster_centroid_roi_values>0, 1.0, 0.0)
     for state in range(k):
@@ -115,29 +118,17 @@ for variables in variable_combos:
 
             pls_process_results(res,variables,age_range,data_dict_name,ITS,Y.shape[0],LEIDA_PLS_DIR,printing=True,sym_matrix=sym_matrix,dir_matrix=dir_matrix)
 
-#%% Loading bsrs that were saved by above code
-bsrs = np.genfromtxt(LEIDA_PLS_DIR.joinpath(f'TP_dict_K{K}_Prcsn_PerceptionTest_1000_its_83_subs_50_to_150_age_range/TP_dict_K{K}_Prcsn_PerceptionTest_1000_its_83_subs_50_to_150_age_range_lv1_bsr.csv'),delimiter=' ')
-bsrs[np.where(np.abs(bsrs) < 2)] = 0
-sns.heatmap(bsrs, cmap='viridis')
-plt.show()
-
 #%% Plot BSR TP matrix
 bsrs = np.genfromtxt(LEIDA_PLS_DIR.joinpath(f'TP_dict_K{K}_age_1000_its_197_subs_0_to_150_age_range/TP_dict_K{K}_age_1000_its_197_subs_0_to_150_age_range_lv1_bsr.csv'),delimiter=' ')
 bsrs[np.where(np.abs(bsrs) < 2)] = 0
 bsrs = bsrs.reshape((K,K))
 abs_min_bsrs = np.abs(np.min(bsrs))
-plt.rcParams["font.sans-serif"] = "Arial"
-font = {'family'    : 'sans-serif',
-        'size'      : 14}
-plt.rc('font', **font)
 cmap = LinearSegmentedColormap.from_list('greyscale', [(.188,.533,.639),(.698,.757,.463),(.886,.761,.133),(.922,.0,.02)],N=100)
 ax = sns.heatmap(bsrs, cmap=cmap,vmin=-1*abs_min_bsrs,vmax=abs_min_bsrs)
-ax.set_xticklabels(list(range(1,K+1)),fontname='Arial')
-ax.set_yticklabels(list(range(1,K+1)), fontname='Arial', rotation=0)
-ax.collections[0].colorbar.set_label("BSR")
-plt.savefig(f'figures/leida-matlab/TP_dict_K{K}_age_1000_its_197_subs_0_to_150_age_range_lv1_bsr_matrix.png',dpi=300)
-
-plt.show()
+ax.set_xticklabels(list(range(1,K+1)))
+ax.set_yticklabels(list(range(1,K+1)), rotation=0)
+#ax.collections[0].colorbar.set_label("BSR")
+plt.savefig(f'outputs/leida-matlab/TP_dict_K{K}_age_1000_its_197_subs_0_to_150_age_range_lv1_bsr_matrix.png',dpi=300)
 
 #%% Fractional Occupancy PLS
 behaviour_ages = pd.read_csv(BEHAVIOURAL_DATA_FILE,sep=',')
@@ -318,7 +309,7 @@ from scipy.stats import pearsonr
 behaviour_ages_filter = behaviour_ages['subject'].isin(subjects.astype(int))
 behaviour_ages_filtered = behaviour_ages.loc[behaviour_ages_filter]
 age_cog_plot = sns.regplot(data=behaviour_ages_filtered,x='age',y='Prcsn_PerceptionTest',ci=None, color=(.224,.604,.694))
-age_cog_plot.figure.savefig('figures/age_by_VSTM_dFC.png',dpi=600)
+age_cog_plot.figure.savefig('outputs/age_by_VSTM_dFC.png',dpi=600)
 print(pearsonr(behaviour_ages_filtered['age'],behaviour_ages_filtered['Prcsn_PerceptionTest']))
 
 #%% demographic info

@@ -50,7 +50,7 @@ def consistency_thresholding(DATA_DIR, OUT_DIR, threshold, subject_list, PARC_NA
             line = line.rstrip('\n')
             subjects.append(line)
 
-    consistency_mask=''
+    consistency_mask=None
     subcounter=0
 
     #unzip each subject into output dir
@@ -60,7 +60,7 @@ def consistency_thresholding(DATA_DIR, OUT_DIR, threshold, subject_list, PARC_NA
         #changing this for updated file structure
         SC_path=os.path.join(DATA_DIR,subject,'structural_inputs','weights.txt')
         print(SC_path)
-        SC=''
+        SC=None
         if os.path.exists(SC_path):
             #load SC
             SC=np.loadtxt(SC_path)[:REGIONS_N,:REGIONS_N]
@@ -76,7 +76,7 @@ def consistency_thresholding(DATA_DIR, OUT_DIR, threshold, subject_list, PARC_NA
             else:
                 #binarize SC and add to consistency mask to track how many subs have a connnection for each connection 
                 SC=np.where(SC>0, 1, 0)
-                if consistency_mask=='':
+                if consistency_mask is None:
                     consistency_mask=np.copy(SC)
                 else:
                     consistency_mask=consistency_mask+SC
@@ -84,7 +84,7 @@ def consistency_thresholding(DATA_DIR, OUT_DIR, threshold, subject_list, PARC_NA
 
     #quit if weve encountered no nan-less SC matrices
     print(consistency_mask)
-    if consistency_mask == '':
+    if consistency_mask is None:
         quit()
 
     #binarize consistency mask, thresholded by (#subs * threshold %)

@@ -65,7 +65,7 @@ Follow instructions here and add `plscmd` folder to startup.m: https://github.co
 ```bash
 git clone https://github.com/McIntosh-Lab/PLS
 cp -r PLS/plscmd ~/matlab
-echo addpath(genpath('~/matlab/plscmd')) >> ~/matlab/startup.m
+echo "addpath(genpath('~/matlab/plscmd'))" >> ~/matlab/startup.m
 echo "addpath(genpath('${PWD}/python_packages/PLS_wrapper'))" >> ~/matlab/startup.m
 ```
 

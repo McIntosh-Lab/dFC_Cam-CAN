@@ -99,5 +99,5 @@ For HPC (Alliance Canada), use sbatch submission scripts provided:
  - `1_2_3_submit_preprocessing.sh`
  - `matlab_toolboxes/leida-matlab-1.0/4_submit_leida.sh` (refer to step 4. above and edit paths)
  - `5_submit_leida_analyses.sh`
- - `6_submit_nctpy_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `nctpy_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`
+ - `6_submit_nctpy_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `nctpy_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
  - `PLS_group_analyses/7_submit_group_analysis.sh`

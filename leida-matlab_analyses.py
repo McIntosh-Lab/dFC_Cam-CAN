@@ -55,7 +55,7 @@ clusters_mat = sio.loadmat(LEIDA_CLUSTERS_FILE, simplify_cells=True)
 for k in K_list:
     LEiDA_centroids_dir = LEIDA_OUTPUTS_DIR.joinpath(f'K{k}')
     LEiDA_centroids_dir.mkdir(exist_ok=True)
-    k_idx = k - 1 #index 1 in .mat starts at state 2
+    k_idx = k - 2 #index 1 (index 0 for python) in .mat starts at state 2
     cluster_centroid_roi_values = clusters_mat['Kmeans_results'][k_idx]['C']
     print('k',k)
     print("cluster_centroid_roi_values.shape",cluster_centroid_roi_values.shape)

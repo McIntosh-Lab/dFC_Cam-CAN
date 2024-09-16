@@ -23,7 +23,7 @@ with importlib.resources.path("PyNeudorf.data","TVB_SchaeferTian_218_subcort.nii
 with importlib.resources.path("PyNeudorf.data","ggseg_Schaefer200.r") as ggseg_r_file:
     GGSEG_R_FILE = ggseg_r_file
 
-def Schaefer200Cortex(data,output_file,data_thresh,int_fig_thresh=True,labels=LABEL_FILE,tmp_dir=TMP_DIR):
+def Schaefer200Cortex(data,output_file,data_thresh,int_fig_thresh=True,labels=LABEL_FILE,tmp_dir=TMP_DIR,rscript='/usr/bin/Rscript'):
     """Use ggseg in R to plot Schaefer 200 parcelation cortex
     Parameters
     ----------
@@ -44,7 +44,7 @@ def Schaefer200Cortex(data,output_file,data_thresh,int_fig_thresh=True,labels=LA
     data_file = tmp_dir.joinpath('Schaefer200Cortex_data.csv')
     np.savetxt(data_file,data,delimiter=',')
 
-    subprocess.call(f'/usr/bin/Rscript --vanilla {str(GGSEG_R_FILE)} \
+    subprocess.call(f'{rscript} --vanilla {str(GGSEG_R_FILE)} \
                     {labels} \
                     {data_file} \
                     {output_file} \

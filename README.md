@@ -80,8 +80,8 @@ For code review:
 Get data from `~/projects/def-rmcintos/jneudorf/Cam-CAN/code_review` (behavioural data, SC matrices and rsfMRI timecourses)
 Extract data/ folder from dFC_data.tar.gz into main folder.
 To reproduce:
-1. Figure 4 PLS behavioural correlation (A) and BSR transition probability matrix (B)
-2. Figure 5 young adult behavioural correlation (B) and brain map BSR (C) plus older adult behavioural correlation (D) and brain map BSR (E)
+1. Figure 4 PLS behavioural correlation (A; `outputs/leida-matlab/PLS/TP_dict_K5_age_1000_its_197_subs_0_to_150_age_range/TP_dict_K5_age_1000_its_197_subs_0_to_150_age_range_lv1_behav_corr.png`) and BSR transition probability matrix (B; `outputs/leida-matlab/PLS/TP_dict_K5_age_1000_its_197_subs_0_to_150_age_range/TP_dict_K5_age_1000_its_197_subs_0_to_150_age_range_lv1_bsr_matrix.png`)
+2. Figure 5 young adult behavioural correlation (B; `outputs/nctpy/5/PLS/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_114_subs_0_to_50_age_range/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_114_subs_0_to_50_age_range_lv1_behav_corr.png`) and brain map BSR (C; `outputs/nctpy/5/PLS/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_114_subs_0_to_50_age_range/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_114_subs_0_to_50_age_range_lv1_bsr_cortex.png` and `outputs/nctpy/5/PLS/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_114_subs_0_to_50_age_range/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_114_subs_0_to_50_age_range_lv1_bsr_subcortex.png`) plus older adult behavioural correlation (D; `outputs/nctpy/5/PLS/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_83_subs_50_to_150_age_range/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_83_subs_50_to_150_age_range_lv1_behav_corr.png`) and brain map BSR (E; `outputs/nctpy/5/PLS/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_83_subs_50_to_150_age_range/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_83_subs_50_to_150_age_range_lv1_bsr_cortex.png` and `outputs/nctpy/5/PLS/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_83_subs_50_to_150_age_range/state_transition_5_to_3_node_energy_dict_continous_age_Prcsn_PerceptionTest_1000_its_83_subs_50_to_150_age_range_lv1_bsr_subcortex.png`)
 Note that the exact BSRs will be different than in the paper because of resampling.
 PLS outputs saved in `outputs/leida-matlab/PLS` and `outputs/nctpy/5/PLS`
 
@@ -97,7 +97,7 @@ Order to run code:
 
 For HPC (Alliance Canada), use sbatch submission scripts provided:
  - `1_2_3_submit_preprocessing.sh`
- - `matlab_toolboxes/leida-matlab-1.0/4_submit_leida.sh`
+ - `matlab_toolboxes/leida-matlab-1.0/4_submit_leida.sh` (refer to step 4. above and edit paths)
  - `5_submit_leida_analyses.sh`
- - `6_submit_nctpy_analyses.sh`
+ - `6_submit_nctpy_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `nctpy_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`
  - `PLS_group_analyses/7_submit_group_analysis.sh`

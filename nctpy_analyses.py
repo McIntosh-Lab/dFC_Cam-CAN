@@ -15,6 +15,8 @@ import matplotlib.image as mpimg
 from PyNeudorf.pls import *
 from PyNeudorf import visualization
 
+RSCRIPT='/usr/bin/Rscript'
+
 ATLAS = '220'
 BEHAVIOURAL_DATA_DIR = Path('data/behav/')
 BEHAVIOURAL_DATA_FILE = BEHAVIOURAL_DATA_DIR.joinpath('behavioural_data.csv')
@@ -238,7 +240,7 @@ for variables in variable_combos:
                 plt.show()
                 bsr = np.genfromtxt(PLS_result_dir.joinpath(f'{PLS_result_dir_str}_lv{lv+1}_bsr.csv'))
                 if data_dict_name in ['ac_dict_continuous','state_transition_5_to_3_node_energy_dict_continous','state_transition_5_to_3_node_energy_dict_continous_bin']:
-                    visualization.Schaefer200Cortex(bsr,PLS_result_dir.joinpath(f'{PLS_result_dir_str}_lv{lv+1}_bsr_cortex.png'),2.0)
+                    visualization.Schaefer200Cortex(bsr,PLS_result_dir.joinpath(f'{PLS_result_dir_str}_lv{lv+1}_bsr_cortex.png'),2.0,RSCRIPT)
                     visualization.SchaeferTian218_subcortical(bsr,PLS_result_dir.joinpath(f'{PLS_result_dir_str}_lv{lv+1}_bsr_subcortex.png'),2.0)
 
 pls_pvalues = pls_pvalues.reindex(sorted(pls_pvalues), axis=1)

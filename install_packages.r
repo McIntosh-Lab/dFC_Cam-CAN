@@ -3,6 +3,7 @@ options(repos = c(
     CRAN = 'https://cloud.r-project.org'))
 
 install.packages('ggplot2')
+install.packages('wesanderson')
 install.packages('readxl')
 install.packages('tidyverse')
 install.packages('dplyr')

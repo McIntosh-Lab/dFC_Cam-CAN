@@ -36,6 +36,7 @@ def Schaefer200Cortex(data,output_file,data_thresh,int_fig_thresh=True,labels=LA
                         column called 'hemi' containing either 'left' or 'right'
     tmp_dir         :   string or pathlib Path. Default to '/tmp/PyNeudorf'. Directory
                         to save data to for use by R.
+    rscript         :   string. path to Rscript executable
     Returns
     -------
     None

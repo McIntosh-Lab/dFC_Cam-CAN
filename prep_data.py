@@ -124,6 +124,7 @@ metadata_df = metadata_df[['subject_id','condition']]
 metadata_df.to_csv(LEIDA_DATA_DIR.joinpath('metadata.csv'),sep=',',index=False)
 
 #%% Save data for leida-matlab
+LEIDA_DATA_DIR.joinpath('matlab/').mkdir(exist_ok=True)
 for k,v in rsfMRI_LEiDA_dict.items():
     condition = metadata_df.loc[metadata_df['subject_id'] == k,['condition']].iat[0,0]
     save_name = f'{k}_{condition}.txt'

@@ -39,10 +39,13 @@ function LEiDA_Start
 
 %% A: STUDY PARAMETERS
 
+%%%%%%% EDIT PATHS BELOW %%%%%%% 
 % Directory of the LEiDA toolbox folder:
 LEiDA_directory = '/path/to/directory/dFC_labshare/matlab_toolboxes/leida-matlab-1.0/'; %update for user file system
 % Directory of the folder with the parcellated neuroimaging data:
 Data_directory = '/path/to/directory/dFC_labshare/LEiDA_inputs/matlab/'; %update for user file system
+%%%%%%% EDIT PATHS ABOVE %%%%%%%
+
 % Name of the run to be used to create the folder to save the data:
 run_name = 'Cam-CAN_TVB_SchaeferTian_218';
 % Tag of conditions given in the parcellated image files:

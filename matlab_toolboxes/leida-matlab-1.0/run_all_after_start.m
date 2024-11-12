@@ -1,10 +1,15 @@
 %%
+%%%%%%% EDIT PATHS BELOW %%%%%%% 
 LEiDA_directory = '/path/to/directory/dFC/matlab_toolboxes/leida-matlab-1.0/'; %update for user file system
+subjects_file = '/path/to/directory/Cam-CAN/dFC/data/subjects.csv'; %update for user file system
+%%%%%%% EDIT PATHS ABOVE %%%%%%%
+
 run_name = 'Cam-CAN_TVB_SchaeferTian_218';
 Parcellation = 'TVBSchaeferTian218';
 n_permutations = 10000; % can decrease for testing, then increase to 10000
 n_bootstraps = 500; % can decrease for testing, then increase to 500
-subjects_file = '/path/to/directory/Cam-CAN/dFC/data/subjects.csv'; %update for user file system
+
+
 
 
 

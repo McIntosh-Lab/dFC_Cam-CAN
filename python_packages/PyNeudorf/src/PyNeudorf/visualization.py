@@ -155,11 +155,11 @@ def SchaeferTian218_subcortical(data,output_file,thresh):
                                                 figure=1,
                                                 annotate=False,
                                                 )
-
-            subcort_img.add_overlay(            subcort_overlay,
-                                                cmap=black_cmap,
-                                                threshold=1.0,
-                                                )
+            # removing black overlay in response to reviewer suggestion
+            # subcort_img.add_overlay(            subcort_overlay,
+            #                                     cmap=black_cmap,
+            #                                     threshold=1.0,
+            #                                     )
             if vmax_pos > 0:
                 subcort_img.add_overlay(        pos_img,
                                                 vmin=img_thresh,

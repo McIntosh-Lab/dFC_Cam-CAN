@@ -242,6 +242,9 @@ for variables in variable_combos:
                 if data_dict_name in ['ac_dict_continuous','state_transition_5_to_3_node_energy_dict_continous','state_transition_5_to_3_node_energy_dict_continous_bin']:
                     visualization.Schaefer200Cortex(bsr,PLS_result_dir.joinpath(f'{PLS_result_dir_str}_lv{lv+1}_bsr_cortex.png'),2.0,rscript=RSCRIPT)
                     visualization.SchaeferTian218_subcortical(bsr,PLS_result_dir.joinpath(f'{PLS_result_dir_str}_lv{lv+1}_bsr_subcortex.png'),2.0)
+                    visualization.Schaefer200Cortex(bsr,PLS_result_dir.joinpath(f'{PLS_result_dir_str}_lv{lv+1}_unthresh_bsr_cortex.png'),0.0)
+                    visualization.SchaeferTian218_subcortical(bsr,PLS_result_dir.joinpath(f'{PLS_result_dir_str}_lv{lv+1}_unthresh_bsr_subcortex.png'),0.0)
+
 
 pls_pvalues = pls_pvalues.reindex(sorted(pls_pvalues), axis=1)
 pls_pvalues.transpose().to_csv(NCTPY_PLS_DIR.joinpath('PLS_pvalues.csv'),sep=',')
@@ -354,3 +357,6 @@ for data_dict_name,data_dict in data_dicts.items():
 #    bsr = np.genfromtxt(f'PLS_group_analyses/NCT_meancentered_LV{lv}_bsr.csv')
 #    visualization.Schaefer200Cortex(bsr,f'PLS_group_analyses/NCT_meancentered_LV{lv}_bsr_cortex.png',2.0)
 #    visualization.SchaeferTian218_subcortical(bsr,f'PLS_group_analyses/NCT_meancentered_LV{lv}_bsr_subcortex.png',2.0)
+#    visualization.Schaefer200Cortex(bsr,f'PLS_group_analyses/NCT_meancentered_LV{lv}_unthresh_bsr_cortex.png',0.0)
+#    visualization.SchaeferTian218_subcortical(bsr,f'PLS_group_analyses/NCT_meancentered_LV{lv}_unthresh_bsr_subcortex.png',0.0)
+

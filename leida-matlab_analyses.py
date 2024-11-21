@@ -14,6 +14,7 @@ from PyNeudorf import graphs
 from PyNeudorf.pls import *
 from brainvistools import visualization
 import math
+import scipy.io
 print('done imports')
 
 BEHAVIOURAL_DATA_DIR = Path('data/behav')
@@ -27,6 +28,9 @@ LEIDA_PLS_DIR.mkdir(parents=True,exist_ok=True)
 SUBJECTS_FILE = Path('data/subjects.csv')
 PLS_GROUP_ANALYSIS_DATA_DIR = Path('PLS_group_analyses/inputs')
 PLS_GROUP_ANALYSIS_DATA_DIR.mkdir(parents=True,exist_ok=True)
+INPUTS_DIR = Path('data')
+GM_VOL_FILE = INPUTS_DIR.joinpath('GM_vol.csv')
+MOTION_FILE = INPUTS_DIR.joinpath('motion.csv')
 
 ITS = 1000
 
@@ -130,6 +134,55 @@ ax.set_yticklabels(list(range(1,K+1)), rotation=0)
 #ax.collections[0].colorbar.set_label("BSR")
 plt.savefig(f'outputs/leida-matlab/TP_dict_K{K}_age_1000_its_197_subs_0_to_150_age_range_lv1_bsr_matrix.png',dpi=300)
 
+
+#%% nuisance variable model
+GM_vol_df = pd.read_csv(GM_VOL_FILE,delimiter=',')
+motion_df = pd.read_csv(MOTION_FILE,delimiter=',')
+behaviour_ages = pd.merge(behaviour_ages,GM_vol_df,on='subject',how='left')
+behaviour_ages = pd.merge(behaviour_ages,motion_df,on='subject',how='left')
+
+# %%  PLS analyses of transition probability matrix (nuisance variables)
+variable_combos = [['GM_vol']]
+filter_variables = ['age','CattellTotal','Prcsn_PerceptionTest','sex','GM_vol']
+for variables in variable_combos:
+    for age_range in age_ranges:
+        for data_dict_name,data_dict_value in data_dicts.items():
+            print(data_dict_name)
+            age_filter = (behaviour_ages['age'] > age_range[0]) & (behaviour_ages['age'] <= age_range[1])
+            behaviour_ages_filtered = behaviour_ages.loc[age_filter]
+            sym_matrix = False
+            dir_matrix = True
+            X, Y = pls_x_y_merge(data_dict_value,behaviour_ages_filtered,variables,filter_variables,sym_matrix=sym_matrix)
+            print(Y.shape)
+            res = pls.pls_analysis(X,Y.shape[0],1,Y,
+                                    num_perm=ITS,
+                                    num_boot=ITS,
+                                    make_script=False)
+
+            pls_process_results(res,variables,age_range,data_dict_name,ITS,Y.shape[0],LEIDA_PLS_DIR,printing=True,sym_matrix=sym_matrix,dir_matrix=dir_matrix)
+
+# %%  PLS analyses of transition probability matrix (nuisance variables)
+variable_combos = [['mean_rel_disp']]
+filter_variables = ['age','CattellTotal','Prcsn_PerceptionTest','sex','mean_rel_disp']
+for variables in variable_combos:
+    for age_range in age_ranges:
+        for data_dict_name,data_dict_value in data_dicts.items():
+            print(data_dict_name)
+            age_filter = (behaviour_ages['age'] > age_range[0]) & (behaviour_ages['age'] <= age_range[1])
+            behaviour_ages_filtered = behaviour_ages.loc[age_filter]
+            sym_matrix = False
+            dir_matrix = True
+            X, Y = pls_x_y_merge(data_dict_value,behaviour_ages_filtered,variables,filter_variables,sym_matrix=sym_matrix)
+            print(Y.shape)
+            res = pls.pls_analysis(X,Y.shape[0],1,Y,
+                                    num_perm=ITS,
+                                    num_boot=ITS,
+                                    make_script=False)
+
+            pls_process_results(res,variables,age_range,data_dict_name,ITS,Y.shape[0],LEIDA_PLS_DIR,printing=True,sym_matrix=sym_matrix,dir_matrix=dir_matrix)
+
+            scipy.io.savemat(LEIDA_PLS_DIR.joinpath(f'TP_dict_K5_{age_range[0]}_to_{age_range[1]}_age_range.mat'),{'X':X,'label':'datamat_lst'})
+
 #%% Fractional Occupancy PLS
 behaviour_ages = pd.read_csv(BEHAVIOURAL_DATA_FILE,sep=',')
 
@@ -173,6 +226,56 @@ for variables in variable_combos:
                                     make_script=False)
 
             pls_process_results(res,variables,age_range,data_dict_name,ITS,Y.shape[0],LEIDA_PLS_DIR,printing=True,sym_matrix=sym_matrix,dir_matrix=dir_matrix)
+
+
+#%% nuisance variable model
+GM_vol_df = pd.read_csv(GM_VOL_FILE,delimiter=',')
+motion_df = pd.read_csv(MOTION_FILE,delimiter=',')
+behaviour_ages = pd.merge(behaviour_ages,GM_vol_df,on='subject',how='left')
+behaviour_ages = pd.merge(behaviour_ages,motion_df,on='subject',how='left')
+
+#%% nuisance variables now
+variable_combos = [['GM_vol']]
+filter_variables = ['age','CattellTotal','Prcsn_PerceptionTest','sex','GM_vol']
+for variables in variable_combos:
+    variables_name = '_'.join(variables)
+    for age_range in age_ranges:
+        for data_dict_name,data_dict_value in data_dicts.items():
+            print(data_dict_name)
+            age_filter = (behaviour_ages['age'] > age_range[0]) & (behaviour_ages['age'] <= age_range[1])
+            behaviour_ages_filtered = behaviour_ages.loc[age_filter]
+            sym_matrix = False
+            dir_matrix = False
+            X, Y = pls_x_y_merge(data_dict_value,behaviour_ages_filtered,variables,filter_variables,sym_matrix=sym_matrix)
+            print(Y.shape)
+            res = pls.pls_analysis(X,Y.shape[0],1,Y,
+                                    num_perm=ITS,
+                                    num_boot=ITS,
+                                    make_script=False)
+
+            pls_process_results(res,variables,age_range,data_dict_name,ITS,Y.shape[0],LEIDA_PLS_DIR,printing=True,sym_matrix=sym_matrix,dir_matrix=dir_matrix)
+
+#%% nuisance variables now
+variable_combos = [['mean_rel_disp']]
+filter_variables = ['age','CattellTotal','Prcsn_PerceptionTest','sex','mean_rel_disp']
+for variables in variable_combos:
+    variables_name = '_'.join(variables)
+    for age_range in age_ranges:
+        for data_dict_name,data_dict_value in data_dicts.items():
+            print(data_dict_name)
+            age_filter = (behaviour_ages['age'] > age_range[0]) & (behaviour_ages['age'] <= age_range[1])
+            behaviour_ages_filtered = behaviour_ages.loc[age_filter]
+            sym_matrix = False
+            dir_matrix = False
+            X, Y = pls_x_y_merge(data_dict_value,behaviour_ages_filtered,variables,filter_variables,sym_matrix=sym_matrix)
+            print(Y.shape)
+            res = pls.pls_analysis(X,Y.shape[0],1,Y,
+                                    num_perm=ITS,
+                                    num_boot=ITS,
+                                    make_script=False)
+
+            pls_process_results(res,variables,age_range,data_dict_name,ITS,Y.shape[0],LEIDA_PLS_DIR,printing=True,sym_matrix=sym_matrix,dir_matrix=dir_matrix)
+
 
 #%% Sex analysis
 sex_filter_male = behaviour_ages['sex'] == 'MALE'

@@ -36,6 +36,8 @@ LEIDA_CENTROID_DIR = LEIDA_OUTPUTS_DIR.joinpath(f'K{LEIDA_K}/')
 LEIDA_CENTROID_FILES = [LEIDA_CENTROID_DIR.joinpath(f'{k}_of_{LEIDA_K}_cluster_centroid_roi_values.csv') for k in range(1,LEIDA_K+1)]
 PLS_GROUP_ANALYSIS_DATA_DIR = Path('PLS_group_analyses/inputs')
 PLS_GROUP_ANALYSIS_DATA_DIR.mkdir(parents=True,exist_ok=True)
+INPUTS_DIR = Path('data')
+GM_VOL_FILE = INPUTS_DIR.joinpath('GM_vol.csv')
 
 ITS = 1000
 
@@ -350,6 +352,33 @@ for data_dict_name,data_dict in data_dicts.items():
     for X_name,X in X_dict.items():
         file_prefix = f'{data_dict_name}_{X_name}_{X.shape[0]}_subs'
         np.savetxt(PLS_GROUP_ANALYSIS_DATA_DIR.joinpath(f'{file_prefix}_X.csv'), X, delimiter=',')
+
+#%% nuisance variable model
+GM_vol_df = pd.read_csv(GM_VOL_FILE,delimiter=',')
+behaviour_ages = pd.merge(behaviour_ages,GM_vol_df,on='subject',how='left')
+
+#%% nuisance variable model
+variable_combos = [['GM_vol']]
+filter_variables = ['age','CattellTotal','Prcsn_PerceptionTest','sex','GM_vol']
+for variables in variable_combos:
+    for age_range in age_ranges:
+        for data_dict_name,data_dict_value in data_dicts.items():
+            print(data_dict_name)
+            age_filter = (behaviour_ages['age'] > age_range[0]) & (behaviour_ages['age'] <= age_range[1])
+            behaviour_ages_filtered = behaviour_ages.loc[age_filter]
+            sym_matrix = False
+            dir_matrix = False
+            if data_dict_name in ['state_transition_energy_dict_continuous','state_transition_energy_dict_continuous_bin']:
+                dir_matrix = True
+            X, Y = pls_x_y_merge(data_dict_value,behaviour_ages_filtered,variables,filter_variables,sym_matrix=sym_matrix)
+            print(Y.shape)
+            res = pls.pls_analysis(X,Y.shape[0],1,Y,
+                                    num_perm=ITS,
+                                    num_boot=ITS,
+                                    make_script=False)
+
+            pls_process_results(res,variables,age_range,data_dict_name,ITS,Y.shape[0],NCTPY_PLS_DIR,printing=True,sym_matrix=sym_matrix,dir_matrix=dir_matrix)
+
 
 #%% Will not work until after running `PLS_group_analyses/PLS_group_analyses.m`
 #NCT_PLS_BSRs = ['PLS_group_analyses/NCT_meancentered_LV1_bsr.csv','PLS_group_analyses/NCT_meancentered_LV2_bsr.csv']

@@ -132,6 +132,7 @@ def SchaeferTian218_subcortical(data,output_file,thresh):
 
     greyscale_cmap = LinearSegmentedColormap.from_list('greyscale', [(0,0,0),(1,1,1)],N=1000)
     black_cmap = LinearSegmentedColormap.from_list('greyscale', [(0,0,0),(0,0,0)],N=1000)
+    grey_cmap = LinearSegmentedColormap.from_list('greyscale', [(0.5,0.5,0.5),(0.5,0.5,0.5)],N=1000)
     yellow_red_cmap = LinearSegmentedColormap.from_list('greyscale', [(.906,.761,.106),(.941,.094,0)],N=1000)
     green_blue_cmap = LinearSegmentedColormap.from_list('greyscale', [(.698,.757,.463),(.224,.604,.694)],N=1000)
 
@@ -155,11 +156,11 @@ def SchaeferTian218_subcortical(data,output_file,thresh):
                                                 figure=1,
                                                 annotate=False,
                                                 )
-            # removing black overlay in response to reviewer suggestion
-            # subcort_img.add_overlay(            subcort_overlay,
-            #                                     cmap=black_cmap,
-            #                                     threshold=1.0,
-            #                                     )
+
+            subcort_img.add_overlay(            subcort_overlay,
+                                                cmap=grey_cmap,
+                                                threshold=1.0,
+                                                )
             if vmax_pos > 0:
                 subcort_img.add_overlay(        pos_img,
                                                 vmin=img_thresh,

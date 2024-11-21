@@ -21,6 +21,10 @@ RSFMRI_DICT_FILE = RSFMRI_DATA_DIR.joinpath(f'TVBSchaeferTian{ATLAS}','fmri_time
 INPUTS_DIR = Path('data')
 LEIDA_DATA_DIR = Path('LEiDA_inputs')
 LEIDA_DATA_DIR.mkdir(exist_ok=True)
+FREESURFER_DATA_DIR = Path('data/freesurfer/brainvol')
+IDP_DATA_DIR = Path('data/IDPs')
+IDP_QC_DATA_DIR = IDP_DATA_DIR.joinpath('QC')
+IDP_REM_DATA_DIR = IDP_DATA_DIR.joinpath('remainder')
 
 #%%
 with open(SC_DICT_FILE, 'rb') as f:
@@ -129,3 +133,29 @@ for k,v in rsfMRI_LEiDA_dict.items():
     condition = metadata_df.loc[metadata_df['subject_id'] == k,['condition']].iat[0,0]
     save_name = f'{k}_{condition}.txt'
     np.savetxt(LEIDA_DATA_DIR.joinpath(f'matlab/{save_name}'),v,delimiter='\t')
+
+#%% Get GM volume data
+GM_vol_dict = {}
+for s in SC_subjects:
+    freesurfer_df = pd.read_csv(FREESURFER_DATA_DIR.joinpath(f'sub-CC{s}_brainvol.stats'),delimiter=',',names=['measure','varname','vardescript','value','units'])
+    GM_vol_dict[s] = freesurfer_df.loc[freesurfer_df['varname'].isin([' CortexVol']),['value']].iloc[0][0]
+
+GM_vol_df = pd.DataFrame({'subject':list(GM_vol_dict.keys()),'GM_vol':list(GM_vol_dict.values())})
+GM_vol_df.to_csv(INPUTS_DIR.joinpath('GM_vol.csv'),sep=',',index=False)
+
+#%% Get mean relative motion
+motion_dict = {}
+for s in rsfMRI_subs:
+    QC_file = IDP_QC_DATA_DIR.joinpath(f'{s}/tvb_new_IDPs.tsv')
+    rem_file = IDP_REM_DATA_DIR.joinpath(f'{s}/tvb_new_IDPs.tsv')
+    if QC_file.exists():
+        IDP_file = QC_file
+    elif rem_file.exists():
+        IDP_file = rem_file
+    else:
+        IDP_file = []
+    IDP_df = pd.read_csv(IDP_file,delimiter='\t')
+    motion_dict[s] = float(IDP_df.loc[IDP_df['short'].isin(['MCFLIRT_rel_disp_mean_rfMRI_0.ica']),['value']].iloc[0][0])
+
+motion_df = pd.DataFrame({'subject':list(motion_dict.keys()),'mean_rel_disp':list(motion_dict.values())})
+motion_df.to_csv(INPUTS_DIR.joinpath('motion.csv'),sep=',',index=False)

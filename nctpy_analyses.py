@@ -72,7 +72,7 @@ dt = .001 # This is the default defined in `get_control_inputs`
 timepoints_n = int(T / dt) + 1
 # With rho=1 and S=np.eye(regions_n) implementing optimal control
 rho = 1 # mixing parameter for state trajectory constraint
-S = np.eye(regions_n) # nodes in state trajectory to be constrained (unconstrained here)
+S = np.eye(regions_n) # nodes in state trajectory to be constrained
 B = np.eye(regions_n) # control node matrix. All nodes as controllers with equal weight (1)
 state_activations = [np.genfromtxt(f) for f in LEIDA_CENTROID_FILES]
 state_activations_bin = [np.where(activation>0, 1, 0) for activation in state_activations]

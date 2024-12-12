@@ -97,8 +97,8 @@ Order to run code:
 7. `PLS_group_analyses/PLS_group_analyses.m` performs secondary mean-centred PLS analyses for LEiDA and NCT analyses.
 
 For HPC (Alliance Canada), use sbatch submission scripts provided. These scripts should be submitted as a job while in the main `dFC_Cam-CAN` directory, unless otherwise specified. In order to submit these scripts as jobs, please use the `sbatch` command (see first bullet for an example):
- - `1_2_3_submit_preprocessing.sh` (Example job submission for this script: `sbatch 1_2_3_submit_preprocessing.sh`)
- - `matlab_toolboxes/leida-matlab-1.0/4_submit_leida.sh` (refer to step 4. above and edit paths. This script should be submitted as a job while in the `matlab_toolboxes/leida-matlab-1.0/` directory.)
- - `5_submit_leida_analyses.sh`
- - `6_submit_nctpy_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `nctpy_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
- - `PLS_group_analyses/7_submit_group_analysis.sh` (This script should be submitted as a job while in the `PLS_group_analyses/` directory.)
+ - `sbatch 1_2_3_submit_preprocessing.sh`
+ - change directories with `cd matlab_toolboxes/leida-matlab-1.0` then `sbatch 4_submit_leida.sh` (refer to step 4. above and edit paths. This script should be submitted as a job while in the `matlab_toolboxes/leida-matlab-1.0/` directory.) When finished change directories back to project directory with `cd ../..`.
+ - `sbatch 5_submit_leida_analyses.sh`
+ - `sbatch 6_submit_nctpy_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `nctpy_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
+ - change directories with `cd PLS_group_analyses` then `sbatch 7_submit_group_analysis.sh` (This script should be submitted as a job while in the `PLS_group_analyses/` directory.)
